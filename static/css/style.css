@@ -10,8 +10,7 @@ body.login{
     height:100vh;
     overflow:hidden;
 
-    background:url("../img/background.png") center center no-repeat;
-    background-size:cover;
+    background:radial-gradient(circle at top,#242424,#121212 70%,#090909);
 
 }
 
@@ -24,7 +23,7 @@ body.login{
     justify-content:center;
     align-items:center;
 
-    background:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.60));
+    background:rgba(0,0,0,.25);
 
 }
 
@@ -32,17 +31,19 @@ body.login{
 
     width:720px;
 
-    padding:45px;
+    padding:50px;
 
     border-radius:32px;
 
-    background:rgba(16,16,20,.35);
+    background:rgba(22,22,22,.78);
 
-    backdrop-filter:blur(20px);
+    backdrop-filter:blur(25px);
 
-    border:1px solid rgba(212,175,55,.18);
+    border:1px solid rgba(212,175,55,.15);
 
-    box-shadow:0 35px 90px rgba(0,0,0,.55);
+    box-shadow:
+    0 35px 90px rgba(0,0,0,.55),
+    inset 0 0 1px rgba(255,255,255,.15);
 
     text-align:center;
 
@@ -50,25 +51,25 @@ body.login{
 
 .logo{
 
-    width:90px;
-
-    margin:auto;
+    width:95px;
 
     display:block;
 
-    margin-bottom:18px;
+    margin:auto;
+
+    margin-bottom:22px;
 
 }
 
 .portal{
 
-    color:#c9a14a;
+    color:#d4af37;
 
     letter-spacing:12px;
 
     font-size:14px;
 
-    margin-bottom:25px;
+    margin-bottom:28px;
 
 }
 
@@ -82,15 +83,17 @@ h1{
 
     font-weight:400;
 
-    margin-bottom:10px;
+    margin-bottom:12px;
 
 }
 
 p{
 
-    color:#d0d0d0;
+    color:#d5d5d5;
 
     font-size:18px;
+
+    line-height:1.6;
 
     margin-bottom:35px;
 
@@ -199,21 +202,35 @@ form{
 }
 
 input,
-select{
-
-    height:55px;
+select,
+textarea{
 
     border:none;
 
     border-radius:12px;
 
-    padding:0 18px;
+    padding:18px;
 
     background:rgba(255,255,255,.08);
 
     color:white;
 
     outline:none;
+
+    font-size:16px;
+
+}
+
+input,
+select{
+
+    height:55px;
+
+}
+
+textarea{
+
+    resize:none;
 
 }
 
@@ -237,6 +254,8 @@ button{
 
     font-size:17px;
 
+    font-weight:600;
+
     cursor:pointer;
 
     transition:.30s;
@@ -246,6 +265,8 @@ button{
 button:hover{
 
     background:#e3c35f;
+
+    transform:translateY(-2px);
 
 }
 
@@ -268,6 +289,8 @@ button:hover{
     .glass{
 
         width:92%;
+
+        padding:35px;
 
     }
 

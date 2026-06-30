@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Portal</title>
+    <title>Entrar | Portal</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
@@ -17,54 +17,96 @@
 
 <div class="overlay">
 
-    <div class="glass">
+<div class="glass">
 
-        <img class="logo" src="{{ url_for('static', filename='img/logo.svg') }}">
+<img
+class="logo"
+src="{{ url_for('static', filename='img/logo.svg') }}">
 
-        <div class="portal">
-            PORTAL
-        </div>
+<div class="portal">
 
-        <h1>Entrar</h1>
+PORTAL
 
-        {% if erro %}
+</div>
 
-        <div class="erro">
+<h1>
 
-            {{ erro }}
+Entrar
 
-        </div>
+</h1>
 
-        {% endif %}
+<p>
 
-        <form action="/entrar" method="POST">
+Selecione o perfil para acessar seu Portal.
 
-            <select name="usuario" required>
+</p>
 
-                <option value="">Selecione o perfil</option>
+{% if erro %}
 
-                <option value="gabriel">Gabriel</option>
+<div class="erro">
 
-                <option value="livia">Lívia</option>
+{{ erro }}
 
-            </select>
+</div>
 
-            <input
-                type="password"
-                name="senha"
-                placeholder="Senha"
-                required
-            >
+{% endif %}
 
-            <button type="submit">
+<form action="/entrar" method="POST">
 
-                Entrar
+<select name="usuario" required>
 
-            </button>
+<option value="">
 
-        </form>
+Selecione o perfil
 
-    </div>
+</option>
+
+<option value="gabriel">
+
+Gabriel
+
+</option>
+
+<option value="livia">
+
+Lívia
+
+</option>
+
+</select>
+
+<input
+type="password"
+name="senha"
+placeholder="Senha"
+required>
+
+<button type="submit">
+
+Entrar
+
+</button>
+
+</form>
+
+<div style="margin-top:30px;">
+
+<a
+href="/"
+style="
+color:#b9b9b9;
+text-decoration:none;
+font-size:15px;
+transition:.3s;
+">
+
+← Voltar
+
+</a>
+
+</div>
+
+</div>
 
 </div>
 

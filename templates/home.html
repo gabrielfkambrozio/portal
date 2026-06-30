@@ -3,39 +3,55 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Portal</title>
+<title>Portal</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
 </head>
 
-<body>
+<body class="login">
 
-    <div class="container">
+<div class="overlay">
 
-        <h1>LG</h1>
+<div class="glass">
 
-        <p>
-            Um lugar para guardar momentos,
-            viagens, restaurantes, filmes e
-            toda a história de vocês.
-        </p>
+<img
+class="logo"
+src="{{ url_for('static', filename='img/logo.svg') }}">
 
-        <a href="/login">
+<div class="portal">
 
-            <button>
+PORTAL
 
-                Entrar
+</div>
 
-            </button>
+<h1>
 
-        </a>
+Bem-vindo
 
-    </div>
+</h1>
+
+<p>
+
+Um lugar para guardar viagens, restaurantes, filmes,
+músicas e toda a história de vocês.
+
+</p>
+
+<button
+onclick="window.location='/login';">
+
+Entrar
+
+</button>
+
+</div>
+
+</div>
 
 </body>
 

@@ -3,13 +3,77 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Portal</title>
+<title>Portal</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<script src="{{ url_for('static', filename='js/portal_storage.js') }}"></script>
+
+<style>
+
+.resumo{
+
+margin-top:35px;
+
+padding:25px;
+
+border-radius:22px;
+
+background:rgba(255,255,255,.04);
+
+border:1px solid rgba(212,175,55,.12);
+
+}
+
+.resumo h3{
+
+color:white;
+
+font-weight:400;
+
+font-size:28px;
+
+margin-bottom:20px;
+
+font-family:Georgia,serif;
+
+}
+
+.linha{
+
+display:flex;
+
+justify-content:space-between;
+
+padding:12px 0;
+
+border-bottom:1px solid rgba(255,255,255,.08);
+
+color:#ddd;
+
+font-size:18px;
+
+}
+
+.linha:last-child{
+
+border-bottom:none;
+
+}
+
+.total{
+
+color:#d4af37;
+
+font-weight:bold;
+
+}
+
+</style>
 
 </head>
 
@@ -131,7 +195,7 @@ Eventos
 
 <div class="avatar">
 
-▤
+❤
 
 </div>
 
@@ -145,9 +209,83 @@ Declarações
 
 </div>
 
+<div class="resumo">
+
+<h3>
+
+Resumo do Portal
+
+</h3>
+
+<div class="linha">
+
+<span>Viagens</span>
+
+<span class="total" id="v"></span>
+
+</div>
+
+<div class="linha">
+
+<span>Restaurantes</span>
+
+<span class="total" id="r"></span>
+
+</div>
+
+<div class="linha">
+
+<span>Filmes</span>
+
+<span class="total" id="f"></span>
+
+</div>
+
+<div class="linha">
+
+<span>Músicas</span>
+
+<span class="total" id="m"></span>
+
+</div>
+
+<div class="linha">
+
+<span>Eventos</span>
+
+<span class="total" id="e"></span>
+
+</div>
+
+<div class="linha">
+
+<span>Declarações</span>
+
+<span class="total" id="d"></span>
+
 </div>
 
 </div>
+
+</div>
+
+</div>
+
+<script>
+
+document.getElementById("v").innerText=PortalStorage.listar("viagens").length;
+
+document.getElementById("r").innerText=PortalStorage.listar("restaurantes").length;
+
+document.getElementById("f").innerText=PortalStorage.listar("filmes").length;
+
+document.getElementById("m").innerText=PortalStorage.listar("musicas").length;
+
+document.getElementById("e").innerText=PortalStorage.listar("eventos").length;
+
+document.getElementById("d").innerText=PortalStorage.listar("declaracoes").length;
+
+</script>
 
 </body>
 
