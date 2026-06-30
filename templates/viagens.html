@@ -1,184 +1,261 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
+  <meta charset="UTF-8" />
+  <title>Portal | Viagens</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <meta charset="UTF-8">
+  <script src="{{ url_for('static', filename='js/portal_storage.js') }}"></script>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      background: radial-gradient(circle at top, #24152f, #09070d 70%);
+      color: #f7eefc;
+      min-height: 100vh;
+    }
 
-    <title>Viagens</title>
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 42px 24px;
+    }
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    .topo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 34px;
+    }
 
+    .topo h1 {
+      margin: 0;
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+
+    .topo a {
+      color: #d9b8ff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .painel {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(18px);
+      margin-bottom: 28px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border-radius: 16px;
+      padding: 14px 15px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    textarea {
+      grid-column: 1 / -1;
+      min-height: 96px;
+      resize: vertical;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(255, 255, 255, 0.52);
+    }
+
+    button {
+      border: none;
+      border-radius: 16px;
+      padding: 14px 20px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #b879ff, #ff8bd1);
+      color: #150b1d;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .acoes {
+      margin-top: 18px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    .lista {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.075);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 24px;
+      padding: 22px;
+      min-height: 180px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .meta {
+      color: #d8c6e8;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .obs {
+      color: #f3e8ff;
+      font-size: 14px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .remover {
+      margin-top: 18px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .vazio {
+      color: #d8c6e8;
+      font-size: 15px;
+      padding: 18px 0;
+    }
+
+    @media (max-width: 900px) {
+      .form-grid,
+      .lista {
+        grid-template-columns: 1fr;
+      }
+
+      .topo {
+        align-items: flex-start;
+        gap: 12px;
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 
-<body class="login">
-
-<div class="overlay">
-
-<div class="glass">
-
-<img class="logo"
-src="{{ url_for('static', filename='img/logo.svg') }}">
-
-<div class="portal">
-
-PORTAL
-
-</div>
-
-<h1>
-
-Viagens
-
-</h1>
-
-<p>
-
-{{ usuario }}
-
-</p>
-
-<div class="cards">
-
-<a href="/dashboard/{{ usuario|lower }}" class="card">
-
-<div class="avatar">
-
-⌂
-
-</div>
-
-<h2>
-
-Dashboard
-
-</h2>
-
-</a>
-
-<a href="/nova-viagem/{{ usuario|lower }}" class="card">
-
-<div class="avatar">
-
-+
-
-</div>
-
-<h2>
-
-Nova Viagem
-
-</h2>
-
-</a>
-
-</div>
-
-<br><br>
-
-{% if viagens|length == 0 %}
-
-<div class="card" style="width:100%;padding:35px;height:auto;">
-
-<h2>
-
-Nenhuma viagem cadastrada
-
-</h2>
-
-<p style="margin-top:10px;">
-
-Clique em <b>Nova Viagem</b>
-
-</p>
-
-</div>
-
-{% endif %}
-
-{% for viagem in viagens %}
-
-<div
-class="card"
-style="
-width:100%;
-height:auto;
-padding:25px;
-margin-bottom:20px;
-text-align:left;
-">
-
-<div style="display:flex;justify-content:space-between;align-items:center;">
-
-<div>
-
-<h2>
-
-{{ viagem.destino }}
-
-</h2>
-
-<p>
-
-{{ viagem.cidade }} • {{ viagem.pais }}
-
-</p>
-
-<p>
-
-{{ viagem.inicio }} até {{ viagem.fim }}
-
-</p>
-
-<p>
-
-R$ {{ "%.2f"|format(viagem.valor|float) }}
-
-</p>
-
-<p>
-
-{{ viagem.status }}
-
-</p>
-
-</div>
-
-<div style="display:flex;gap:10px;">
-
-<button>
-
-Abrir
-
-</button>
-
-<button>
-
-Editar
-
-</button>
-
-<button
-style="background:#9f2d2d;color:white;">
-
-Excluir
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-{% endfor %}
-
-</div>
-
-</div>
-
+<body>
+  <main class="container">
+    <div class="topo">
+      <h1>Viagens</h1>
+      <a href="/dashboard">Voltar ao Dashboard</a>
+    </div>
+
+    <section class="painel">
+      <form id="formViagem">
+        <div class="form-grid">
+          <input id="destino" placeholder="Destino" required />
+          <input id="dataInicio" type="date" />
+          <input id="dataFim" type="date" />
+          <input id="hotel" placeholder="Hotel / hospedagem" />
+          <input id="transporte" placeholder="Transporte" />
+          <input id="status" placeholder="Status" />
+          <textarea id="observacoes" placeholder="Observações da viagem"></textarea>
+        </div>
+
+        <div class="acoes">
+          <button type="submit">Salvar viagem</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="lista" id="listaViagens"></section>
+  </main>
+
+  <script>
+    const MODULO = "viagens";
+
+    const form = document.getElementById("formViagem");
+    const lista = document.getElementById("listaViagens");
+
+    function formatarData(data) {
+      if (!data) return "Sem data";
+      const partes = data.split("-");
+      return `${partes[2]}/${partes[1]}/${partes[0]}`;
+    }
+
+    function renderizarViagens() {
+      const viagens = PortalStorage.listar(MODULO);
+      lista.innerHTML = "";
+
+      if (!viagens.length) {
+        lista.innerHTML = `<div class="vazio">Nenhuma viagem cadastrada ainda.</div>`;
+        return;
+      }
+
+      viagens.forEach((viagem) => {
+        const card = document.createElement("article");
+        card.className = "card";
+
+        card.innerHTML = `
+          <h3>${viagem.destino || "Viagem sem destino"}</h3>
+
+          <div class="meta">
+            <div><strong>Período:</strong> ${formatarData(viagem.dataInicio)} até ${formatarData(viagem.dataFim)}</div>
+            <div><strong>Hotel:</strong> ${viagem.hotel || "Não informado"}</div>
+            <div><strong>Transporte:</strong> ${viagem.transporte || "Não informado"}</div>
+            <div><strong>Status:</strong> ${viagem.status || "Não informado"}</div>
+          </div>
+
+          <div class="obs">${viagem.observacoes || ""}</div>
+
+          <button class="remover" onclick="removerViagem('${viagem.id}')">Remover</button>
+        `;
+
+        lista.appendChild(card);
+      });
+    }
+
+    function removerViagem(id) {
+      PortalStorage.remover(MODULO, id);
+      renderizarViagens();
+    }
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      PortalStorage.adicionar(MODULO, {
+        destino: document.getElementById("destino").value.trim(),
+        dataInicio: document.getElementById("dataInicio").value,
+        dataFim: document.getElementById("dataFim").value,
+        hotel: document.getElementById("hotel").value.trim(),
+        transporte: document.getElementById("transporte").value.trim(),
+        status: document.getElementById("status").value.trim(),
+        observacoes: document.getElementById("observacoes").value.trim()
+      });
+
+      form.reset();
+      renderizarViagens();
+    });
+
+    renderizarViagens();
+  </script>
 </body>
-
 </html>

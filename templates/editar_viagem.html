@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editar Viagem</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="login">
+
+<div class="overlay">
+
+<div class="glass">
+
+<img
+class="logo"
+src="{{ url_for('static', filename='img/logo.svg') }}">
+
+<div class="portal">
+
+PORTAL
+
+</div>
+
+<h1>
+
+Editar Viagem
+
+</h1>
+
+<p>
+
+Atualize as informações da viagem
+
+</p>
+
+<form action="/atualizar-viagem/{{ viagem.id }}/{{ usuario|lower }}" method="POST">
+
+<input
+type="text"
+name="destino"
+value="{{ viagem.destino }}"
+placeholder="Destino"
+required>
+
+<input
+type="text"
+name="cidade"
+value="{{ viagem.cidade }}"
+placeholder="Cidade"
+required>
+
+<input
+type="text"
+name="pais"
+value="{{ viagem.pais }}"
+placeholder="País"
+required>
+
+<div style="display:flex;gap:15px;">
+
+<input
+type="date"
+name="inicio"
+value="{{ viagem.inicio }}"
+required
+style="flex:1;">
+
+<input
+type="date"
+name="fim"
+value="{{ viagem.fim }}"
+required
+style="flex:1;">
+
+</div>
+
+<input
+type="number"
+step="0.01"
+name="valor"
+value="{{ viagem.valor }}"
+placeholder="Valor previsto">
+
+<select name="status">
+
+<option value="Planejada"
+{% if viagem.status=="Planejada" %}selected{% endif %}>
+Planejada
+</option>
+
+<option value="Em andamento"
+{% if viagem.status=="Em andamento" %}selected{% endif %}>
+Em andamento
+</option>
+
+<option value="Concluída"
+{% if viagem.status=="Concluída" %}selected{% endif %}>
+Concluída
+</option>
+
+</select>
+
+<textarea
+name="observacoes"
+placeholder="Observações..."
+style="
+height:140px;
+resize:none;
+padding:18px;
+border:none;
+border-radius:12px;
+background:rgba(255,255,255,.08);
+color:white;
+font-size:16px;
+outline:none;
+">{{ viagem.observacoes }}</textarea>
+
+<div style="display:flex;gap:15px;">
+
+<button
+type="button"
+onclick="window.location='/viagens/{{ usuario|lower }}';"
+style="flex:1;background:#444;color:white;">
+
+Cancelar
+
+</button>
+
+<button
+type="submit"
+style="flex:2;">
+
+Salvar Alterações
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+
+</html>
