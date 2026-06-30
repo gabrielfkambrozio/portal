@@ -7,6 +7,8 @@ USUARIOS = {
     "livia": "1234"
 }
 
+VIAGENS = []
+
 
 @app.route("/")
 def home():
@@ -37,6 +39,42 @@ def dashboard(usuario):
         "dashboard.html",
         usuario=usuario.capitalize()
     )
+
+
+@app.route("/viagens/<usuario>")
+def viagens(usuario):
+
+    return render_template(
+        "viagens.html",
+        usuario=usuario.capitalize(),
+        viagens=VIAGENS
+    )
+
+
+@app.route("/nova-viagem/<usuario>")
+def nova_viagem(usuario):
+
+    return render_template(
+        "nova_viagem.html",
+        usuario=usuario.capitalize()
+    )
+
+
+@app.route("/salvar-viagem/<usuario>", methods=["POST"])
+def salvar_viagem(usuario):
+
+    VIAGENS.append({
+
+        "destino": request.form["destino"],
+        "cidade": request.form["cidade"],
+        "pais": request.form["pais"],
+        "inicio": request.form["inicio"],
+        "fim": request.form["fim"],
+        "valor": request.form["valor"]
+
+    })
+
+    return redirect(f"/viagens/{usuario}")
 
 
 if __name__ == "__main__":

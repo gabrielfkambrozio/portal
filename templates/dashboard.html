@@ -3,13 +3,13 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dashboard</title>
+    <title>Portal</title>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
 </head>
 
@@ -19,7 +19,8 @@
 
 <div class="glass">
 
-<img class="logo"
+<img
+class="logo"
 src="{{ url_for('static', filename='img/logo.svg') }}">
 
 <div class="portal">
@@ -34,73 +35,113 @@ Bem-vindo, {{ usuario }}
 
 </h1>
 
+<p>
+
+Escolha um módulo
+
+</p>
+
 <div class="cards">
 
-<div class="card">
+<a href="/viagens/{{ usuario|lower }}" class="card">
 
-✈️
+<div class="avatar">
 
-<br><br>
+✈
+
+</div>
+
+<h2>
 
 Viagens
 
+</h2>
+
+</a>
+
+<a href="#" class="card">
+
+<div class="avatar">
+
+⌘
+
 </div>
 
-<div class="card">
-
-🍽
-
-<br><br>
+<h2>
 
 Restaurantes
 
+</h2>
+
+</a>
+
+<a href="#" class="card">
+
+<div class="avatar">
+
+▶
+
 </div>
 
-<div class="card">
-
-🎬
-
-<br><br>
+<h2>
 
 Filmes
 
-</div>
+</h2>
+
+</a>
 
 </div>
-
-<br>
 
 <div class="cards">
 
-<div class="card">
+<a href="#" class="card">
 
-🎵
+<div class="avatar">
 
-<br><br>
+♫
+
+</div>
+
+<h2>
 
 Músicas
 
+</h2>
+
+</a>
+
+<a href="#" class="card">
+
+<div class="avatar">
+
+◫
+
 </div>
 
-<div class="card">
-
-📅
-
-<br><br>
+<h2>
 
 Eventos
 
+</h2>
+
+</a>
+
+<a href="#" class="card">
+
+<div class="avatar">
+
+▤
+
 </div>
 
-<div class="card">
-
-📄
-
-<br><br>
+<h2>
 
 Declarações
 
-</div>
+</h2>
+
+</a>
 
 </div>
 
