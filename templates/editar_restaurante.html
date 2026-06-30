@@ -1,0 +1,175 @@
+!DOCTYPE html
+html lang=pt-BR
+
+head
+
+    meta charset=UTF-8
+
+    meta name=viewport content=width=device-width, initial-scale=1.0
+
+    titleEditar Restaurantetitle
+
+    link rel=stylesheet href={{ url_for('static', filename='cssstyle.css') }}
+
+    script src={{ url_for('static', filename='jsportal_storage.js') }}script
+
+head
+
+body class=login
+
+div class=overlay
+
+div class=glass
+
+img
+class=logo
+src={{ url_for('static', filename='imglogo.svg') }}
+
+div class=portal
+
+PORTAL
+
+div
+
+h1
+
+Editar Restaurante
+
+h1
+
+p
+
+Atualize as informações do restaurante.
+
+p
+
+form id=formEditar
+
+input
+type=text
+id=nome
+required
+
+input
+type=text
+id=cidade
+required
+
+input
+type=text
+id=tipo
+
+div style=displayflex;gap15px;
+
+input
+type=date
+id=data
+style=flex1;
+
+input
+type=number
+id=nota
+min=0
+max=10
+step=0.5
+style=flex1;
+
+div
+
+input
+type=number
+step=0.01
+id=valor
+
+textarea
+id=observacoes
+style=
+height140px;
+resizenone;
+padding18px;
+bordernone;
+border-radius12px;
+backgroundrgba(255,255,255,.08);
+colorwhite;
+font-size16px;
+outlinenone;
+textarea
+
+div style=displayflex;gap15px;
+
+button
+type=button
+onclick=window.location='restaurantes{{ usuariolower }}';
+style=flex1;background#444;colorwhite;
+
+Cancelar
+
+button
+
+button
+type=submit
+style=flex2;
+
+Salvar Alterações
+
+button
+
+div
+
+form
+
+div
+
+div
+
+script
+
+const id = {{ restaurante.id }};
+
+const restaurante = PortalStorage.buscar(restaurantes, id);
+
+if(restaurante){
+
+document.getElementById(nome).value = restaurante.nome  ;
+document.getElementById(cidade).value = restaurante.cidade  ;
+document.getElementById(tipo).value = restaurante.tipo  ;
+document.getElementById(data).value = restaurante.data  ;
+document.getElementById(nota).value = restaurante.nota  ;
+document.getElementById(valor).value = restaurante.valor  ;
+document.getElementById(observacoes).value = restaurante.observacoes  ;
+
+}
+
+document
+.getElementById(formEditar)
+.addEventListener(submit,function(e){
+
+e.preventDefault();
+
+PortalStorage.atualizar(restaurantes,id,{
+
+nomedocument.getElementById(nome).value,
+
+cidadedocument.getElementById(cidade).value,
+
+tipodocument.getElementById(tipo).value,
+
+datadocument.getElementById(data).value,
+
+notadocument.getElementById(nota).value,
+
+valordocument.getElementById(valor).value,
+
+observacoesdocument.getElementById(observacoes).value
+
+});
+
+window.location=restaurantes{{ usuariolower }};
+
+});
+
+script
+
+body
+
+html

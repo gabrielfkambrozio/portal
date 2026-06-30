@@ -52,6 +52,10 @@ def dashboard(usuario):
     )
 
 
+# =========================
+# VIAGENS
+# =========================
+
 @app.route("/viagens/<usuario>")
 def viagens(usuario):
 
@@ -100,6 +104,62 @@ def editar_viagem(id, usuario):
             "fim": "",
             "valor": "",
             "status": "Planejada",
+            "observacoes": ""
+        }
+    )
+
+
+# =========================
+# RESTAURANTES
+# =========================
+
+@app.route("/restaurantes/<usuario>")
+def restaurantes(usuario):
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
+        return redirect("/login")
+
+    return render_template(
+        "restaurantes.html",
+        usuario=usuario.capitalize()
+    )
+
+
+@app.route("/novo-restaurante/<usuario>")
+def novo_restaurante(usuario):
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
+        return redirect("/login")
+
+    return render_template(
+        "novo_restaurante.html",
+        usuario=usuario.capitalize()
+    )
+
+
+@app.route("/editar-restaurante/<int:id>/<usuario>")
+def editar_restaurante(id, usuario):
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
+        return redirect("/login")
+
+    return render_template(
+        "editar_restaurante.html",
+        usuario=usuario.capitalize(),
+        restaurante={
+            "id": id,
+            "nome": "",
+            "cidade": "",
+            "tipo": "",
+            "data": "",
+            "nota": "",
+            "valor": "",
             "observacoes": ""
         }
     )
