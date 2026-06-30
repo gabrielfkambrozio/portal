@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editar Evento</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="{{ url_for('static', filename='js/portal_storage.js') }}"></script>
+
+</head>
+
+<body class="login">
+
+<div class="overlay">
+
+<div class="glass">
+
+<img
+class="logo"
+src="{{ url_for('static', filename='img/logo.svg') }}">
+
+<div class="portal">
+
+PORTAL
+
+</div>
+
+<h1>
+
+Editar Evento
+
+</h1>
+
+<p>
+
+Atualize as informações do evento.
+
+</p>
+
+<form id="formEditar">
+
+<input
+type="text"
+id="titulo"
+required>
+
+<input
+type="text"
+id="categoria">
+
+<input
+type="text"
+id="local">
+
+<div style="display:flex;gap:15px;">
+
+<input
+type="date"
+id="data"
+style="flex:1;">
+
+<input
+type="time"
+id="hora"
+style="flex:1;">
+
+</div>
+
+<input
+type="number"
+step="0.01"
+id="valor">
+
+<textarea
+id="observacoes"
+style="
+height:140px;
+resize:none;
+padding:18px;
+border:none;
+border-radius:12px;
+background:rgba(255,255,255,.08);
+color:white;
+font-size:16px;
+outline:none;
+"></textarea>
+
+<div style="display:flex;gap:15px;">
+
+<button
+type="button"
+onclick="window.location='/eventos/{{ usuario|lower }}';"
+style="flex:1;background:#444;color:white;">
+
+Cancelar
+
+</button>
+
+<button
+type="submit"
+style="flex:2;">
+
+Salvar Alterações
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<script>
+
+const id = {{ evento.id }};
+
+const evento = PortalStorage.buscar("eventos", id);
+
+if(evento){
+
+document.getElementById("titulo").value = evento.titulo || "";
+document.getElementById("categoria").value = evento.categoria || "";
+document.getElementById("local").value = evento.local || "";
+document.getElementById("data").value = evento.data || "";
+document.getElementById("hora").value = evento.hora || "";
+document.getElementById("valor").value = evento.valor || "";
+document.getElementById("observacoes").value = evento.observacoes || "";
+
+}
+
+document
+.getElementById("formEditar")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+PortalStorage.atualizar("eventos",id,{
+
+titulo:document.getElementById("titulo").value,
+
+categoria:document.getElementById("categoria").value,
+
+local:document.getElementById("local").value,
+
+data:document.getElementById("data").value,
+
+hora:document.getElementById("hora").value,
+
+valor:document.getElementById("valor").value,
+
+observacoes:document.getElementById("observacoes").value
+
+});
+
+window.location="/eventos/{{ usuario|lower }}";
+
+});
+
+</script>
+
+</body>
+
+</html>

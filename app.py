@@ -220,5 +220,117 @@ def editar_filme(id, usuario):
     )
 
 
+# =========================
+# MÚSICAS
+# =========================
+
+@app.route("/musicas/<usuario>")
+def musicas(usuario):
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
+        return redirect("/login")
+
+    return render_template(
+        "musicas.html",
+        usuario=usuario.capitalize()
+    )
+
+
+@app.route("/nova-musica/<usuario>")
+def nova_musica(usuario):
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
+        return redirect("/login")
+
+    return render_template(
+        "nova_musica.html",
+        usuario=usuario.capitalize()
+    )
+
+
+@app.route("/editar-musica/<int:id>/<usuario>")
+def editar_musica(id, usuario):
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
+        return redirect("/login")
+
+    return render_template(
+        "editar_musica.html",
+        usuario=usuario.capitalize(),
+        musica={
+            "id": id,
+            "titulo": "",
+            "artista": "",
+            "album": "",
+            "genero": "",
+            "data": "",
+            "nota": "",
+            "observacoes": ""
+        }
+    )
+
+
+# =========================
+# EVENTOS
+# =========================
+
+@app.route("/eventos/<usuario>")
+def eventos(usuario):
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
+        return redirect("/login")
+
+    return render_template(
+        "eventos.html",
+        usuario=usuario.capitalize()
+    )
+
+
+@app.route("/novo-evento/<usuario>")
+def novo_evento(usuario):
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
+        return redirect("/login")
+
+    return render_template(
+        "novo_evento.html",
+        usuario=usuario.capitalize()
+    )
+
+
+@app.route("/editar-evento/<int:id>/<usuario>")
+def editar_evento(id, usuario):
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
+        return redirect("/login")
+
+    return render_template(
+        "editar_evento.html",
+        usuario=usuario.capitalize(),
+        evento={
+            "id": id,
+            "titulo": "",
+            "local": "",
+            "categoria": "",
+            "data": "",
+            "hora": "",
+            "valor": "",
+            "observacoes": ""
+        }
+    )
+
+
 if __name__ == "__main__":
     app.run(debug=True)
