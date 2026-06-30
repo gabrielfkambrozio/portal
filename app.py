@@ -165,5 +165,60 @@ def editar_restaurante(id, usuario):
     )
 
 
+# =========================
+# FILMES
+# =========================
+
+@app.route("/filmes/<usuario>")
+def filmes(usuario):
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
+        return redirect("/login")
+
+    return render_template(
+        "filmes.html",
+        usuario=usuario.capitalize()
+    )
+
+
+@app.route("/novo-filme/<usuario>")
+def novo_filme(usuario):
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
+        return redirect("/login")
+
+    return render_template(
+        "novo_filme.html",
+        usuario=usuario.capitalize()
+    )
+
+
+@app.route("/editar-filme/<int:id>/<usuario>")
+def editar_filme(id, usuario):
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
+        return redirect("/login")
+
+    return render_template(
+        "editar_filme.html",
+        usuario=usuario.capitalize(),
+        filme={
+            "id": id,
+            "titulo": "",
+            "genero": "",
+            "data": "",
+            "nota": "",
+            "duracao": "",
+            "observacoes": ""
+        }
+    )
+
+
 if __name__ == "__main__":
     app.run(debug=True)

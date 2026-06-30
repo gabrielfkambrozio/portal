@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Filmes</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<script src="{{ url_for('static', filename='js/portal_storage.js') }}"></script>
+
+<style>
+
+.lista{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+}
+
+.cardFilme{
+
+background:rgba(255,255,255,.08);
+
+border-radius:16px;
+
+padding:20px;
+
+border:1px solid rgba(255,255,255,.08);
+
+color:white;
+
+}
+
+.cardFilme h2{
+
+margin-bottom:15px;
+
+font-size:22px;
+
+}
+
+.cardFilme p{
+
+margin:6px 0;
+
+font-size:15px;
+
+}
+
+.acoes{
+
+display:flex;
+
+gap:10px;
+
+margin-top:18px;
+
+}
+
+.acoes button{
+
+flex:1;
+
+}
+
+</style>
+
+</head>
+
+<body class="login">
+
+<div class="overlay">
+
+<div class="glass" style="width:1200px;max-width:95%;">
+
+<img
+class="logo"
+src="{{ url_for('static', filename='img/logo.svg') }}">
+
+<div class="portal">
+
+PORTAL
+
+</div>
+
+<h1>
+
+Filmes
+
+</h1>
+
+<p>
+
+Filmes que marcaram vocês.
+
+</p>
+
+<div style="display:flex;justify-content:space-between;gap:15px;">
+
+<button
+onclick="window.location='/dashboard/{{ usuario|lower }}'"
+style="background:#444;color:white;">
+
+Dashboard
+
+</button>
+
+<button
+onclick="window.location='/novo-filme/{{ usuario|lower }}'">
+
+Novo Filme
+
+</button>
+
+</div>
+
+<div
+class="lista"
+id="lista">
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const usuario="{{ usuario|lower }}";
+
+function carregar(){
+
+const lista=document.getElementById("lista");
+
+lista.innerHTML="";
+
+const filmes=PortalStorage.listar("filmes");
+
+if(filmes.length===0){
+
+lista.innerHTML="<p style='color:white'>Nenhum filme cadastrado.</p>";
+
+return;
+
+}
+
+filmes.forEach(f=>{
+
+const card=document.createElement("div");
+
+card.className="cardFilme";
+
+card.innerHTML=`
+
+<h2>${f.titulo}</h2>
+
+<p><strong>Gênero:</strong> ${f.genero}</p>
+
+<p><strong>Data:</strong> ${f.data}</p>
+
+<p><strong>Duração:</strong> ${f.duracao}</p>
+
+<p><strong>Nota:</strong> ${f.nota}</p>
+
+<p>${f.observacoes || ""}</p>
+
+<div class="acoes">
+
+<button onclick="editar(${f.id})">
+
+Editar
+
+</button>
+
+<button
+style="background:#a22;color:white;"
+onclick="remover(${f.id})">
+
+Excluir
+
+</button>
+
+</div>
+
+`;
+
+lista.appendChild(card);
+
+});
+
+}
+
+function editar(id){
+
+window.location=`/editar-filme/${id}/${usuario}`;
+
+}
+
+function remover(id){
+
+if(!confirm("Deseja excluir este filme?")) return;
+
+PortalStorage.remover("filmes",id);
+
+carregar();
+
+}
+
+carregar();
+
+</script>
+
+</body>
+
+</html>
