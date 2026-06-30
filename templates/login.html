@@ -15,47 +15,58 @@
 
 <body class="login">
 
-    <div class="overlay">
+<div class="overlay">
 
-        <div class="glass">
+    <div class="glass">
 
-            <img class="logo" src="{{ url_for('static', filename='img/logo.svg') }}" alt="LG">
+        <img class="logo" src="{{ url_for('static', filename='img/logo.svg') }}">
 
-            <div class="portal">PORTAL</div>
+        <div class="portal">
+            PORTAL
+        </div>
 
-            <h1>Bem-vindos</h1>
+        <h1>Entrar</h1>
 
-            <p>
-                Escolha seu perfil
-            </p>
+        {% if erro %}
 
-            <div class="cards">
+        <div class="erro">
 
-                <div class="card">
-
-                    <div class="avatar">
-                        G
-                    </div>
-
-                    <h2>Gabriel</h2>
-
-                </div>
-
-                <div class="card">
-
-                    <div class="avatar">
-                        L
-                    </div>
-
-                    <h2>Lívia</h2>
-
-                </div>
-
-            </div>
+            {{ erro }}
 
         </div>
 
+        {% endif %}
+
+        <form action="/entrar" method="POST">
+
+            <select name="usuario" required>
+
+                <option value="">Selecione o perfil</option>
+
+                <option value="gabriel">Gabriel</option>
+
+                <option value="livia">Lívia</option>
+
+            </select>
+
+            <input
+                type="password"
+                name="senha"
+                placeholder="Senha"
+                required
+            >
+
+            <button type="submit">
+
+                Entrar
+
+            </button>
+
+        </form>
+
     </div>
+
+</div>
 
 </body>
 

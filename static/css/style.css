@@ -8,28 +8,26 @@
 body.login{
 
     height:100vh;
+    overflow:hidden;
 
     background:url("../img/background.png") center center no-repeat;
-
     background-size:cover;
-
-    overflow:hidden;
 
 }
 
 .overlay{
 
     width:100%;
-
     height:100%;
 
     display:flex;
-
     justify-content:center;
-
     align-items:center;
 
-    background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.55));
+    background:linear-gradient(
+        rgba(0,0,0,.35),
+        rgba(0,0,0,.55)
+    );
 
 }
 
@@ -39,63 +37,63 @@ body.login{
 
     padding:45px;
 
-    border-radius:28px;
+    border-radius:30px;
 
-    background:rgba(18,18,22,.45);
+    background:rgba(18,18,22,.35);
 
-    backdrop-filter:blur(18px);
+    backdrop-filter:blur(20px);
 
-    border:1px solid rgba(212,175,55,.20);
+    border:1px solid rgba(212,175,55,.18);
 
-    box-shadow:0 25px 70px rgba(0,0,0,.55);
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.55),
+        inset 0 1px rgba(255,255,255,.05);
 
     text-align:center;
 
-    animation:fade .8s;
+    animation:fade .7s ease;
 
 }
 
 @keyframes fade{
 
-from{
+    from{
 
-opacity:0;
+        opacity:0;
+        transform:translateY(25px);
 
-transform:translateY(35px);
+    }
 
-}
+    to{
 
-to{
+        opacity:1;
+        transform:none;
 
-opacity:1;
-
-transform:translateY(0);
-
-}
+    }
 
 }
 
 .logo{
 
-    width:120px;
+    width:95px;
 
     display:block;
 
-    margin:auto;
+    margin:0 auto 18px auto;
 
-    margin-bottom:20px;
+    filter:drop-shadow(0 0 12px rgba(212,175,55,.25));
 
 }
 
 .portal{
 
-    color:#b69349;
+    color:#bfa36a;
 
-    letter-spacing:12px;
+    letter-spacing:10px;
 
-    font-size:15px;
+    font-size:14px;
 
-    margin-bottom:20px;
+    margin-bottom:25px;
 
 }
 
@@ -103,21 +101,23 @@ h1{
 
     color:white;
 
-    font-size:48px;
+    font-size:52px;
 
     font-family:Georgia,serif;
 
     font-weight:400;
 
-    margin-bottom:10px;
+    margin-bottom:8px;
 
 }
 
 p{
 
-    color:#c9c9c9;
+    color:#cfcfcf;
 
-    margin-bottom:45px;
+    font-size:18px;
+
+    margin-bottom:35px;
 
 }
 
@@ -127,7 +127,9 @@ p{
 
     justify-content:center;
 
-    gap:25px;
+    gap:22px;
+
+    margin-top:20px;
 
 }
 
@@ -139,13 +141,13 @@ p{
 
     border-radius:22px;
 
-    cursor:pointer;
-
-    transition:.35s;
-
     background:rgba(255,255,255,.04);
 
-    border:1px solid rgba(212,175,55,.18);
+    border:1px solid rgba(212,175,55,.15);
+
+    transition:.30s;
+
+    cursor:pointer;
 
 }
 
@@ -153,23 +155,25 @@ p{
 
     transform:translateY(-8px);
 
-    border-color:#D4AF37;
+    border-color:#d4af37;
 
-    box-shadow:0 0 30px rgba(212,175,55,.18);
+    background:rgba(212,175,55,.08);
+
+    box-shadow:0 0 35px rgba(212,175,55,.18);
 
 }
 
 .avatar{
 
-    width:95px;
+    width:92px;
 
-    height:95px;
+    height:92px;
+
+    border-radius:50%;
 
     margin:auto;
 
-    margin-bottom:22px;
-
-    border-radius:50%;
+    margin-bottom:20px;
 
     display:flex;
 
@@ -179,13 +183,13 @@ p{
 
     font-size:42px;
 
-    color:#D4AF37;
-
     font-family:Georgia,serif;
 
-    background:#0f0f12;
+    color:#d4af37;
 
-    border:1px solid #D4AF37;
+    border:1px solid #d4af37;
+
+    background:rgba(0,0,0,.35);
 
 }
 
@@ -195,32 +199,121 @@ p{
 
     font-weight:300;
 
+    margin-bottom:6px;
+
+}
+
+form{
+
+    margin-top:30px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+select,
+input{
+
+    height:54px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:12px;
+
+    padding:0 18px;
+
+    font-size:16px;
+
+    color:white;
+
+    background:rgba(255,255,255,.08);
+
+}
+
+select option{
+
+    color:black;
+
+}
+
+input::placeholder{
+
+    color:#bdbdbd;
+
+}
+
+button{
+
+    height:54px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    background:#d4af37;
+
+    color:#111;
+
+    transition:.3s;
+
+}
+
+button:hover{
+
+    background:#e3bf58;
+
+}
+
+.erro{
+
+    margin-bottom:20px;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    background:#8d2222;
+
+    color:white;
+
 }
 
 @media(max-width:700px){
 
-.glass{
+    .glass{
 
-width:92%;
+        width:92%;
 
-padding:35px;
+        padding:35px;
 
-}
+    }
 
-.cards{
+    .cards{
 
-flex-direction:column;
+        flex-direction:column;
 
-align-items:center;
+        align-items:center;
 
-}
+    }
 
-.card{
+    .card{
 
-width:100%;
+        width:100%;
 
-max-width:260px;
+        max-width:260px;
 
-}
+    }
 
 }

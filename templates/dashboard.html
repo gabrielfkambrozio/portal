@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body class="login">
+
+<div class="overlay">
+
+<div class="glass">
+
+<img class="logo"
+src="{{ url_for('static', filename='img/logo.svg') }}">
+
+<div class="portal">
+
+PORTAL
+
+</div>
+
+<h1>
+
+Bem-vindo, {{ usuario }}
+
+</h1>
+
+<div class="cards">
+
+<div class="card">
+
+✈️
+
+<br><br>
+
+Viagens
+
+</div>
+
+<div class="card">
+
+🍽
+
+<br><br>
+
+Restaurantes
+
+</div>
+
+<div class="card">
+
+🎬
+
+<br><br>
+
+Filmes
+
+</div>
+
+</div>
+
+<br>
+
+<div class="cards">
+
+<div class="card">
+
+🎵
+
+<br><br>
+
+Músicas
+
+</div>
+
+<div class="card">
+
+📅
+
+<br><br>
+
+Eventos
+
+</div>
+
+<div class="card">
+
+📄
+
+<br><br>
+
+Declarações
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>
