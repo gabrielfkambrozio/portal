@@ -3,13 +3,13 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Viagens</title>
+    <title>Viagens</title>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
 </head>
 
@@ -19,8 +19,7 @@
 
 <div class="glass">
 
-<img
-class="logo"
+<img class="logo"
 src="{{ url_for('static', filename='img/logo.svg') }}">
 
 <div class="portal">
@@ -37,17 +36,33 @@ Viagens
 
 <p>
 
-Bem-vindo, {{ usuario }}
+{{ usuario }}
 
 </p>
 
 <div class="cards">
 
-<div class="card">
+<a href="/dashboard/{{ usuario|lower }}" class="card">
 
 <div class="avatar">
 
-➕
+⌂
+
+</div>
+
+<h2>
+
+Dashboard
+
+</h2>
+
+</a>
+
+<a href="/nova-viagem/{{ usuario|lower }}" class="card">
+
+<div class="avatar">
+
++
 
 </div>
 
@@ -57,9 +72,108 @@ Nova Viagem
 
 </h2>
 
+</a>
+
+</div>
+
+<br><br>
+
+{% if viagens|length == 0 %}
+
+<div class="card" style="width:100%;padding:35px;height:auto;">
+
+<h2>
+
+Nenhuma viagem cadastrada
+
+</h2>
+
+<p style="margin-top:10px;">
+
+Clique em <b>Nova Viagem</b>
+
+</p>
+
+</div>
+
+{% endif %}
+
+{% for viagem in viagens %}
+
+<div
+class="card"
+style="
+width:100%;
+height:auto;
+padding:25px;
+margin-bottom:20px;
+text-align:left;
+">
+
+<div style="display:flex;justify-content:space-between;align-items:center;">
+
+<div>
+
+<h2>
+
+{{ viagem.destino }}
+
+</h2>
+
+<p>
+
+{{ viagem.cidade }} • {{ viagem.pais }}
+
+</p>
+
+<p>
+
+{{ viagem.inicio }} até {{ viagem.fim }}
+
+</p>
+
+<p>
+
+R$ {{ "%.2f"|format(viagem.valor|float) }}
+
+</p>
+
+<p>
+
+{{ viagem.status }}
+
+</p>
+
+</div>
+
+<div style="display:flex;gap:10px;">
+
+<button>
+
+Abrir
+
+</button>
+
+<button>
+
+Editar
+
+</button>
+
+<button
+style="background:#9f2d2d;color:white;">
+
+Excluir
+
+</button>
+
 </div>
 
 </div>
+
+</div>
+
+{% endfor %}
 
 </div>
 
