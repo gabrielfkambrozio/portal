@@ -3,8 +3,8 @@ from flask import Flask, render_template, request, redirect
 app = Flask(__name__)
 
 USUARIOS = {
-    "gabriel": "290626",
-    "livia": "290626"
+    "gabriel": "2906",
+    "livia": "2906"
 }
 
 
@@ -20,7 +20,6 @@ def login():
 
 @app.route("/entrar", methods=["POST"])
 def entrar():
-
     usuario = request.form.get("usuario")
     senha = request.form.get("senha")
 
@@ -33,9 +32,13 @@ def entrar():
     )
 
 
+@app.route("/dashboard")
+def dashboard_sem_usuario():
+    return redirect("/login")
+
+
 @app.route("/dashboard/<usuario>")
 def dashboard(usuario):
-
     if usuario.lower() not in USUARIOS:
         return redirect("/login")
 
@@ -47,7 +50,6 @@ def dashboard(usuario):
 
 @app.route("/viagens/<usuario>")
 def viagens(usuario):
-
     if usuario.lower() not in USUARIOS:
         return redirect("/login")
 
@@ -59,7 +61,6 @@ def viagens(usuario):
 
 @app.route("/nova-viagem/<usuario>")
 def nova_viagem(usuario):
-
     if usuario.lower() not in USUARIOS:
         return redirect("/login")
 
@@ -69,9 +70,8 @@ def nova_viagem(usuario):
     )
 
 
-@app.route("/editar-viagem/<int:id>/<usuario>")
+@app.route("/editar-viagem/<id>/<usuario>")
 def editar_viagem(id, usuario):
-
     if usuario.lower() not in USUARIOS:
         return redirect("/login")
 
