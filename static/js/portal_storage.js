@@ -1,60 +1,97 @@
 const PortalStorage = {
-  prefix: "portal_livia_",
 
-  key(modulo) {
-    return `${this.prefix}${modulo}`;
-  },
+    prefix: "portal_lg_",
 
-  listar(modulo) {
-    const bruto = localStorage.getItem(this.key(modulo));
-    if (!bruto) return [];
+    chave(modulo) {
+        return this.prefix + modulo;
+    },
 
-    try {
-      return JSON.parse(bruto);
-    } catch {
-      return [];
+    listar(modulo) {
+
+        const dados = localStorage.getItem(this.chave(modulo));
+
+        if (!dados) {
+            return [];
+        }
+
+        try {
+            return JSON.parse(dados);
+        } catch (e) {
+            return [];
+        }
+
+    },
+
+    salvar(modulo, lista) {
+
+        localStorage.setItem(
+            this.chave(modulo),
+            JSON.stringify(lista)
+        );
+
+    },
+
+    adicionar(modulo, item) {
+
+        const lista = this.listar(modulo);
+
+        item.id = Date.now();
+
+        lista.push(item);
+
+        this.salvar(modulo, lista);
+
+        return item;
+
+    },
+
+    buscar(modulo, id) {
+
+        const lista = this.listar(modulo);
+
+        return lista.find(v => Number(v.id) === Number(id));
+
+    },
+
+    atualizar(modulo, id, dados) {
+
+        const lista = this.listar(modulo);
+
+        const indice = lista.findIndex(
+            v => Number(v.id) === Number(id)
+        );
+
+        if (indice === -1) {
+            return false;
+        }
+
+        lista[indice] = {
+            ...lista[indice],
+            ...dados
+        };
+
+        this.salvar(modulo, lista);
+
+        return true;
+
+    },
+
+    remover(modulo, id) {
+
+        const lista = this
+            .listar(modulo)
+            .filter(v => Number(v.id) !== Number(id));
+
+        this.salvar(modulo, lista);
+
+    },
+
+    limpar(modulo) {
+
+        localStorage.removeItem(
+            this.chave(modulo)
+        );
+
     }
-  },
 
-  salvar(modulo, dados) {
-    localStorage.setItem(this.key(modulo), JSON.stringify(dados));
-  },
-
-  adicionar(modulo, item) {
-    const dados = this.listar(modulo);
-
-    const novoItem = {
-      id: crypto.randomUUID(),
-      criado_em: new Date().toISOString(),
-      ...item
-    };
-
-    dados.unshift(novoItem);
-    this.salvar(modulo, dados);
-
-    return novoItem;
-  },
-
-  atualizar(modulo, id, novosDados) {
-    const dados = this.listar(modulo).map((item) => {
-      if (item.id !== id) return item;
-
-      return {
-        ...item,
-        ...novosDados,
-        atualizado_em: new Date().toISOString()
-      };
-    });
-
-    this.salvar(modulo, dados);
-  },
-
-  remover(modulo, id) {
-    const dados = this.listar(modulo).filter((item) => item.id !== id);
-    this.salvar(modulo, dados);
-  },
-
-  limpar(modulo) {
-    localStorage.removeItem(this.key(modulo));
-  }
 };

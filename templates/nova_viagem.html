@@ -11,6 +11,8 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
+    <script src="{{ url_for('static', filename='js/portal_storage.js') }}"></script>
+
 </head>
 
 <body class="login">
@@ -41,23 +43,23 @@ Cadastre uma nova experiência
 
 </p>
 
-<form action="/salvar-viagem/{{ usuario|lower }}" method="POST">
+<form id="formViagem">
 
 <input
 type="text"
-name="destino"
+id="destino"
 placeholder="Destino (Ex.: Disney, Torre Eiffel)"
 required>
 
 <input
 type="text"
-name="cidade"
+id="cidade"
 placeholder="Cidade"
 required>
 
 <input
 type="text"
-name="pais"
+id="pais"
 placeholder="País"
 required>
 
@@ -65,13 +67,13 @@ required>
 
 <input
 type="date"
-name="inicio"
+id="inicio"
 required
 style="flex:1;">
 
 <input
 type="date"
-name="fim"
+id="fim"
 required
 style="flex:1;">
 
@@ -80,10 +82,10 @@ style="flex:1;">
 <input
 type="number"
 step="0.01"
-name="valor"
+id="valor"
 placeholder="Valor previsto">
 
-<select name="status">
+<select id="status">
 
 <option value="Planejada">
 
@@ -106,7 +108,7 @@ Concluída
 </select>
 
 <textarea
-name="observacoes"
+id="observacoes"
 placeholder="Observações..."
 style="
 height:140px;
@@ -146,6 +148,40 @@ Salvar Viagem
 </div>
 
 </div>
+
+<script>
+
+document
+.getElementById("formViagem")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+PortalStorage.adicionar("viagens",{
+
+destino:document.getElementById("destino").value,
+
+cidade:document.getElementById("cidade").value,
+
+pais:document.getElementById("pais").value,
+
+dataInicio:document.getElementById("inicio").value,
+
+dataFim:document.getElementById("fim").value,
+
+valor:document.getElementById("valor").value,
+
+status:document.getElementById("status").value,
+
+observacoes:document.getElementById("observacoes").value
+
+});
+
+window.location="/viagens/{{ usuario|lower }}";
+
+});
+
+</script>
 
 </body>
 

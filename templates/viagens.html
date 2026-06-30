@@ -1,130 +1,122 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>Portal | Viagens</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <script src="{{ url_for('static', filename='js/portal_storage.js') }}"></script>
+<meta charset="UTF-8">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Inter, Arial, sans-serif;
-      background: radial-gradient(circle at top, #24152f, #09070d 70%);
-      color: #f7eefc;
-      min-height: 100vh;
-    }
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    .container {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 42px 24px;
-    }
+<title>Viagens</title>
 
-    .topo {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 34px;
-    }
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-    .topo h1 {
-      margin: 0;
-      font-size: 34px;
-      font-weight: 700;
-      letter-spacing: -.04em;
-    }
+<script src="{{ url_for('static', filename='js/portal_storage.js') }}"></script>
 
-    .topo a {
-      color: #d9b8ff;
-      text-decoration: none;
-      font-size: 14px;
-    }
+<style>
 
-    .painel {
-      background: rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:28px;
-      padding:28px;
-      backdrop-filter:blur(18px);
-      margin-bottom:28px;
-    }
+.lista{
 
-    .acoes{
-      display:flex;
-      justify-content:flex-end;
-      margin-top:20px;
-    }
+display:grid;
 
-    button{
-      border:none;
-      border-radius:16px;
-      padding:14px 20px;
-      cursor:pointer;
-      background:linear-gradient(135deg,#b879ff,#ff8bd1);
-      color:#150b1d;
-      font-weight:700;
-    }
+grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
 
-    .lista{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:18px;
-    }
+gap:20px;
 
-    .card{
-      background:rgba(255,255,255,.08);
-      border-radius:24px;
-      padding:22px;
-    }
+margin-top:30px;
 
-    .meta{
-      font-size:14px;
-      color:#ddd;
-      margin-top:10px;
-    }
+}
 
-    .obs{
-      margin-top:12px;
-      white-space:pre-wrap;
-    }
+.cardViagem{
 
-    .remover{
-      margin-top:18px;
-      width:100%;
-    }
+background:rgba(255,255,255,.08);
 
-    @media(max-width:900px){
-      .lista{
-        grid-template-columns:1fr;
-      }
-    }
-  </style>
+border-radius:16px;
+
+padding:20px;
+
+color:white;
+
+border:1px solid rgba(255,255,255,.08);
+
+}
+
+.cardViagem h2{
+
+margin-bottom:15px;
+
+font-size:22px;
+
+}
+
+.cardViagem p{
+
+margin:6px 0;
+
+font-size:15px;
+
+}
+
+.acoes{
+
+display:flex;
+
+gap:10px;
+
+margin-top:18px;
+
+}
+
+.acoes button{
+
+flex:1;
+
+}
+
+</style>
 
 </head>
 
-<body>
+<body class="login">
 
-<main class="container">
+<div class="overlay">
 
-<div class="topo">
+<div class="glass" style="width:1200px;max-width:95%;">
 
-<h1>Viagens</h1>
+<img
+class="logo"
+src="{{ url_for('static', filename='img/logo.svg') }}">
 
-<a href="/dashboard/{{ usuario|lower }}">
+<div class="portal">
 
-Voltar ao Dashboard
-
-</a>
+PORTAL
 
 </div>
 
-<div class="painel">
+<h1>
 
-<div class="acoes">
+Viagens
 
-<button onclick="window.location='/nova-viagem/{{ usuario|lower }}'">
+</h1>
+
+<p>
+
+Suas viagens cadastradas
+
+</p>
+
+<div style="display:flex;justify-content:space-between;gap:15px;">
+
+<button
+onclick="window.location='/dashboard/{{ usuario|lower }}'"
+style="background:#444;color:white;">
+
+Dashboard
+
+</button>
+
+<button
+onclick="window.location='/nova-viagem/{{ usuario|lower }}'">
 
 Nova Viagem
 
@@ -132,41 +124,31 @@ Nova Viagem
 
 </div>
 
+<div
+class="lista"
+id="lista">
+
 </div>
 
-<section
-class="lista"
-id="listaViagens">
+</div>
 
-</section>
-
-</main>
+</div>
 
 <script>
 
-const MODULO="viagens";
-
-const lista=document.getElementById("listaViagens");
-
-function formatar(data){
-
-if(!data) return "-";
-
-const p=data.split("-");
-
-return `${p[2]}/${p[1]}/${p[0]}`;
-
-}
+const usuario="{{ usuario|lower }}";
 
 function carregar(){
 
-const viagens=PortalStorage.listar(MODULO);
+const lista=document.getElementById("lista");
 
 lista.innerHTML="";
 
+const viagens=PortalStorage.listar("viagens");
+
 if(viagens.length===0){
 
-lista.innerHTML="<p>Nenhuma viagem cadastrada.</p>";
+lista.innerHTML="<p style='color:white'>Nenhuma viagem cadastrada.</p>";
 
 return;
 
@@ -176,49 +158,43 @@ viagens.forEach(v=>{
 
 const card=document.createElement("div");
 
-card.className="card";
+card.className="cardViagem";
 
 card.innerHTML=`
 
 <h2>${v.destino}</h2>
 
-<div class="meta">
+<p><strong>Cidade:</strong> ${v.cidade}</p>
 
-${formatar(v.dataInicio)} até ${formatar(v.dataFim)}
+<p><strong>País:</strong> ${v.pais}</p>
 
-</div>
+<p><strong>Início:</strong> ${v.dataInicio}</p>
 
-<div class="meta">
+<p><strong>Fim:</strong> ${v.dataFim}</p>
 
-Hotel: ${v.hotel||"-"}
+<p><strong>Valor:</strong> ${v.valor}</p>
 
-</div>
+<p><strong>Status:</strong> ${v.status}</p>
 
-<div class="meta">
+<p>${v.observacoes||""}</p>
 
-Transporte: ${v.transporte||"-"}
+<div class="acoes">
 
-</div>
+<button onclick="editar(${v.id})">
 
-<div class="meta">
+Editar
 
-Status: ${v.status||"-"}
-
-</div>
-
-<div class="obs">
-
-${v.observacoes||""}
-
-</div>
+</button>
 
 <button
-class="remover"
-onclick="remover('${v.id}')">
+style="background:#a22;color:white;"
+onclick="remover(${v.id})">
 
 Excluir
 
 </button>
+
+</div>
 
 `;
 
@@ -228,9 +204,17 @@ lista.appendChild(card);
 
 }
 
+function editar(id){
+
+window.location=`/editar-viagem/${id}/${usuario}`;
+
+}
+
 function remover(id){
 
-PortalStorage.remover(MODULO,id);
+if(!confirm("Deseja excluir esta viagem?")) return;
+
+PortalStorage.remover("viagens",id);
 
 carregar();
 
@@ -241,4 +225,5 @@ carregar();
 </script>
 
 </body>
+
 </html>

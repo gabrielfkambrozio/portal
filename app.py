@@ -20,8 +20,9 @@ def login():
 
 @app.route("/entrar", methods=["POST"])
 def entrar():
-    usuario = request.form.get("usuario")
-    senha = request.form.get("senha")
+
+    usuario = request.form.get("usuario", "").lower()
+    senha = request.form.get("senha", "")
 
     if usuario in USUARIOS and senha == USUARIOS[usuario]:
         return redirect(f"/dashboard/{usuario}")
@@ -39,7 +40,10 @@ def dashboard_sem_usuario():
 
 @app.route("/dashboard/<usuario>")
 def dashboard(usuario):
-    if usuario.lower() not in USUARIOS:
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
         return redirect("/login")
 
     return render_template(
@@ -50,7 +54,10 @@ def dashboard(usuario):
 
 @app.route("/viagens/<usuario>")
 def viagens(usuario):
-    if usuario.lower() not in USUARIOS:
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
         return redirect("/login")
 
     return render_template(
@@ -61,7 +68,10 @@ def viagens(usuario):
 
 @app.route("/nova-viagem/<usuario>")
 def nova_viagem(usuario):
-    if usuario.lower() not in USUARIOS:
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
         return redirect("/login")
 
     return render_template(
@@ -70,27 +80,28 @@ def nova_viagem(usuario):
     )
 
 
-@app.route("/editar-viagem/<id>/<usuario>")
+@app.route("/editar-viagem/<int:id>/<usuario>")
 def editar_viagem(id, usuario):
-    if usuario.lower() not in USUARIOS:
-        return redirect("/login")
 
-    viagem = {
-        "id": id,
-        "destino": "",
-        "cidade": "",
-        "pais": "",
-        "inicio": "",
-        "fim": "",
-        "valor": "",
-        "status": "Planejada",
-        "observacoes": ""
-    }
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
+        return redirect("/login")
 
     return render_template(
         "editar_viagem.html",
         usuario=usuario.capitalize(),
-        viagem=viagem
+        viagem={
+            "id": id,
+            "destino": "",
+            "cidade": "",
+            "pais": "",
+            "inicio": "",
+            "fim": "",
+            "valor": "",
+            "status": "Planejada",
+            "observacoes": ""
+        }
     )
 
 

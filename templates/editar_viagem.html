@@ -11,6 +11,8 @@
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
+    <script src="{{ url_for('static', filename='js/portal_storage.js') }}"></script>
+
 </head>
 
 <body class="login">
@@ -41,76 +43,56 @@ Atualize as informações da viagem
 
 </p>
 
-<form action="/atualizar-viagem/{{ viagem.id }}/{{ usuario|lower }}" method="POST">
+<form id="formEditar">
 
 <input
 type="text"
-name="destino"
-value="{{ viagem.destino }}"
-placeholder="Destino"
+id="destino"
 required>
 
 <input
 type="text"
-name="cidade"
-value="{{ viagem.cidade }}"
-placeholder="Cidade"
+id="cidade"
 required>
 
 <input
 type="text"
-name="pais"
-value="{{ viagem.pais }}"
-placeholder="País"
+id="pais"
 required>
 
 <div style="display:flex;gap:15px;">
 
 <input
 type="date"
-name="inicio"
-value="{{ viagem.inicio }}"
-required
-style="flex:1;">
+id="inicio"
+style="flex:1;"
+required>
 
 <input
 type="date"
-name="fim"
-value="{{ viagem.fim }}"
-required
-style="flex:1;">
+id="fim"
+style="flex:1;"
+required>
 
 </div>
 
 <input
 type="number"
 step="0.01"
-name="valor"
-value="{{ viagem.valor }}"
-placeholder="Valor previsto">
+id="valor">
 
-<select name="status">
+<select id="status">
 
-<option value="Planejada"
-{% if viagem.status=="Planejada" %}selected{% endif %}>
-Planejada
-</option>
+<option value="Planejada">Planejada</option>
 
-<option value="Em andamento"
-{% if viagem.status=="Em andamento" %}selected{% endif %}>
-Em andamento
-</option>
+<option value="Em andamento">Em andamento</option>
 
-<option value="Concluída"
-{% if viagem.status=="Concluída" %}selected{% endif %}>
-Concluída
-</option>
+<option value="Concluída">Concluída</option>
 
 </select>
 
 <textarea
-name="observacoes"
-placeholder="Observações..."
+id="observacoes"
 style="
 height:140px;
 resize:none;
@@ -121,7 +103,7 @@ background:rgba(255,255,255,.08);
 color:white;
 font-size:16px;
 outline:none;
-">{{ viagem.observacoes }}</textarea>
+"></textarea>
 
 <div style="display:flex;gap:15px;">
 
@@ -149,6 +131,50 @@ Salvar Alterações
 </div>
 
 </div>
+
+<script>
+
+const id = {{ viagem.id }};
+
+const viagem = PortalStorage.buscar("viagens", id);
+
+if (viagem) {
+
+document.getElementById("destino").value = viagem.destino || "";
+document.getElementById("cidade").value = viagem.cidade || "";
+document.getElementById("pais").value = viagem.pais || "";
+document.getElementById("inicio").value = viagem.dataInicio || "";
+document.getElementById("fim").value = viagem.dataFim || "";
+document.getElementById("valor").value = viagem.valor || "";
+document.getElementById("status").value = viagem.status || "Planejada";
+document.getElementById("observacoes").value = viagem.observacoes || "";
+
+}
+
+document
+.getElementById("formEditar")
+.addEventListener("submit", function(e){
+
+e.preventDefault();
+
+PortalStorage.atualizar("viagens", id, {
+
+destino: document.getElementById("destino").value,
+cidade: document.getElementById("cidade").value,
+pais: document.getElementById("pais").value,
+dataInicio: document.getElementById("inicio").value,
+dataFim: document.getElementById("fim").value,
+valor: document.getElementById("valor").value,
+status: document.getElementById("status").value,
+observacoes: document.getElementById("observacoes").value
+
+});
+
+window.location="/viagens/{{ usuario|lower }}";
+
+});
+
+</script>
 
 </body>
 
