@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Declarações</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<script src="{{ url_for('static', filename='js/portal_storage.js') }}"></script>
+
+<style>
+
+.lista{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+
+gap:20px;
+
+margin-top:30px;
+
+}
+
+.cardDeclaracao{
+
+background:rgba(255,255,255,.08);
+
+border-radius:16px;
+
+padding:20px;
+
+border:1px solid rgba(255,255,255,.08);
+
+color:white;
+
+}
+
+.cardDeclaracao h2{
+
+margin-bottom:15px;
+
+font-size:22px;
+
+}
+
+.cardDeclaracao p{
+
+margin:6px 0;
+
+font-size:15px;
+
+}
+
+.texto{
+
+margin-top:15px;
+
+white-space:pre-wrap;
+
+line-height:1.6;
+
+}
+
+.acoes{
+
+display:flex;
+
+gap:10px;
+
+margin-top:18px;
+
+}
+
+.acoes button{
+
+flex:1;
+
+}
+
+</style>
+
+</head>
+
+<body class="login">
+
+<div class="overlay">
+
+<div class="glass" style="width:1200px;max-width:95%;">
+
+<img
+class="logo"
+src="{{ url_for('static', filename='img/logo.svg') }}">
+
+<div class="portal">
+
+PORTAL
+
+</div>
+
+<h1>
+
+Declarações
+
+</h1>
+
+<p>
+
+Mensagens e declarações especiais.
+
+</p>
+
+<div style="display:flex;justify-content:space-between;gap:15px;">
+
+<button
+onclick="window.location='/dashboard/{{ usuario|lower }}'"
+style="background:#444;color:white;">
+
+Dashboard
+
+</button>
+
+<button
+onclick="window.location='/nova-declaracao/{{ usuario|lower }}'">
+
+Nova Declaração
+
+</button>
+
+</div>
+
+<div
+class="lista"
+id="lista">
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const usuario="{{ usuario|lower }}";
+
+function carregar(){
+
+const lista=document.getElementById("lista");
+
+lista.innerHTML="";
+
+const declaracoes=PortalStorage.listar("declaracoes");
+
+if(declaracoes.length===0){
+
+lista.innerHTML="<p style='color:white'>Nenhuma declaração cadastrada.</p>";
+
+return;
+
+}
+
+declaracoes.forEach(d=>{
+
+const card=document.createElement("div");
+
+card.className="cardDeclaracao";
+
+card.innerHTML=`
+
+<h2>${d.titulo}</h2>
+
+<p><strong>Categoria:</strong> ${d.categoria}</p>
+
+<p><strong>Data:</strong> ${d.data}</p>
+
+<div class="texto">
+
+${d.texto || ""}
+
+</div>
+
+<div class="acoes">
+
+<button onclick="editar(${d.id})">
+
+Editar
+
+</button>
+
+<button
+style="background:#a22;color:white;"
+onclick="remover(${d.id})">
+
+Excluir
+
+</button>
+
+</div>
+
+`;
+
+lista.appendChild(card);
+
+});
+
+}
+
+function editar(id){
+
+window.location=`/editar-declaracao/${id}/${usuario}`;
+
+}
+
+function remover(id){
+
+if(!confirm("Deseja excluir esta declaração?")) return;
+
+PortalStorage.remover("declaracoes",id);
+
+carregar();
+
+}
+
+carregar();
+
+</script>
+
+</body>
+
+</html>

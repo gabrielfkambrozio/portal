@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editar Declaração</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="{{ url_for('static', filename='js/portal_storage.js') }}"></script>
+
+</head>
+
+<body class="login">
+
+<div class="overlay">
+
+<div class="glass">
+
+<img
+class="logo"
+src="{{ url_for('static', filename='img/logo.svg') }}">
+
+<div class="portal">
+
+PORTAL
+
+</div>
+
+<h1>
+
+Editar Declaração
+
+</h1>
+
+<p>
+
+Atualize sua declaração.
+
+</p>
+
+<form id="formEditar">
+
+<input
+type="text"
+id="titulo"
+required>
+
+<input
+type="text"
+id="categoria">
+
+<input
+type="date"
+id="data">
+
+<textarea
+id="texto"
+style="
+height:220px;
+resize:none;
+padding:18px;
+border:none;
+border-radius:12px;
+background:rgba(255,255,255,.08);
+color:white;
+font-size:16px;
+outline:none;
+"></textarea>
+
+<div style="display:flex;gap:15px;">
+
+<button
+type="button"
+onclick="window.location='/declaracoes/{{ usuario|lower }}';"
+style="flex:1;background:#444;color:white;">
+
+Cancelar
+
+</button>
+
+<button
+type="submit"
+style="flex:2;">
+
+Salvar Alterações
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<script>
+
+const id = {{ declaracao.id }};
+
+const declaracao = PortalStorage.buscar("declaracoes", id);
+
+if(declaracao){
+
+document.getElementById("titulo").value = declaracao.titulo || "";
+document.getElementById("categoria").value = declaracao.categoria || "";
+document.getElementById("data").value = declaracao.data || "";
+document.getElementById("texto").value = declaracao.texto || "";
+
+}
+
+document
+.getElementById("formEditar")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+PortalStorage.atualizar("declaracoes",id,{
+
+titulo:document.getElementById("titulo").value,
+
+categoria:document.getElementById("categoria").value,
+
+data:document.getElementById("data").value,
+
+texto:document.getElementById("texto").value
+
+});
+
+window.location="/declaracoes/{{ usuario|lower }}";
+
+});
+
+</script>
+
+</body>
+
+</html>

@@ -332,5 +332,58 @@ def editar_evento(id, usuario):
     )
 
 
+# =========================
+# DECLARAÇÕES
+# =========================
+
+@app.route("/declaracoes/<usuario>")
+def declaracoes(usuario):
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
+        return redirect("/login")
+
+    return render_template(
+        "declaracoes.html",
+        usuario=usuario.capitalize()
+    )
+
+
+@app.route("/nova-declaracao/<usuario>")
+def nova_declaracao(usuario):
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
+        return redirect("/login")
+
+    return render_template(
+        "nova_declaracao.html",
+        usuario=usuario.capitalize()
+    )
+
+
+@app.route("/editar-declaracao/<int:id>/<usuario>")
+def editar_declaracao(id, usuario):
+
+    usuario = usuario.lower()
+
+    if usuario not in USUARIOS:
+        return redirect("/login")
+
+    return render_template(
+        "editar_declaracao.html",
+        usuario=usuario.capitalize(),
+        declaracao={
+            "id": id,
+            "titulo": "",
+            "categoria": "",
+            "data": "",
+            "texto": ""
+        }
+    )
+
+
 if __name__ == "__main__":
     app.run(debug=True)
