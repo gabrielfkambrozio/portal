@@ -33,7 +33,7 @@
       margin: 0;
       font-size: 34px;
       font-weight: 700;
-      letter-spacing: -0.04em;
+      letter-spacing: -.04em;
     }
 
     .topo a {
@@ -43,219 +43,202 @@
     }
 
     .painel {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 28px;
-      padding: 28px;
-      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
-      backdrop-filter: blur(18px);
-      margin-bottom: 28px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:28px;
+      padding:28px;
+      backdrop-filter:blur(18px);
+      margin-bottom:28px;
     }
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+    .acoes{
+      display:flex;
+      justify-content:flex-end;
+      margin-top:20px;
     }
 
-    input,
-    textarea,
-    select {
-      width: 100%;
-      box-sizing: border-box;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-      border-radius: 16px;
-      padding: 14px 15px;
-      outline: none;
-      font-size: 14px;
+    button{
+      border:none;
+      border-radius:16px;
+      padding:14px 20px;
+      cursor:pointer;
+      background:linear-gradient(135deg,#b879ff,#ff8bd1);
+      color:#150b1d;
+      font-weight:700;
     }
 
-    textarea {
-      grid-column: 1 / -1;
-      min-height: 96px;
-      resize: vertical;
+    .lista{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
     }
 
-    input::placeholder,
-    textarea::placeholder {
-      color: rgba(255, 255, 255, 0.52);
+    .card{
+      background:rgba(255,255,255,.08);
+      border-radius:24px;
+      padding:22px;
     }
 
-    button {
-      border: none;
-      border-radius: 16px;
-      padding: 14px 20px;
-      cursor: pointer;
-      background: linear-gradient(135deg, #b879ff, #ff8bd1);
-      color: #150b1d;
-      font-weight: 700;
-      font-size: 14px;
+    .meta{
+      font-size:14px;
+      color:#ddd;
+      margin-top:10px;
     }
 
-    .acoes {
-      margin-top: 18px;
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
+    .obs{
+      margin-top:12px;
+      white-space:pre-wrap;
     }
 
-    .lista {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
+    .remover{
+      margin-top:18px;
+      width:100%;
     }
 
-    .card {
-      background: rgba(255, 255, 255, 0.075);
-      border: 1px solid rgba(255, 255, 255, 0.13);
-      border-radius: 24px;
-      padding: 22px;
-      min-height: 180px;
-    }
-
-    .card h3 {
-      margin: 0 0 8px;
-      font-size: 20px;
-    }
-
-    .meta {
-      color: #d8c6e8;
-      font-size: 13px;
-      line-height: 1.6;
-      margin-bottom: 12px;
-    }
-
-    .obs {
-      color: #f3e8ff;
-      font-size: 14px;
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-
-    .remover {
-      margin-top: 18px;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-    }
-
-    .vazio {
-      color: #d8c6e8;
-      font-size: 15px;
-      padding: 18px 0;
-    }
-
-    @media (max-width: 900px) {
-      .form-grid,
-      .lista {
-        grid-template-columns: 1fr;
-      }
-
-      .topo {
-        align-items: flex-start;
-        gap: 12px;
-        flex-direction: column;
+    @media(max-width:900px){
+      .lista{
+        grid-template-columns:1fr;
       }
     }
   </style>
+
 </head>
 
 <body>
-  <main class="container">
-    <div class="topo">
-      <h1>Viagens</h1>
-      <a href="/dashboard">Voltar ao Dashboard</a>
-    </div>
 
-    <section class="painel">
-      <form id="formViagem">
-        <div class="form-grid">
-          <input id="destino" placeholder="Destino" required />
-          <input id="dataInicio" type="date" />
-          <input id="dataFim" type="date" />
-          <input id="hotel" placeholder="Hotel / hospedagem" />
-          <input id="transporte" placeholder="Transporte" />
-          <input id="status" placeholder="Status" />
-          <textarea id="observacoes" placeholder="Observações da viagem"></textarea>
-        </div>
+<main class="container">
 
-        <div class="acoes">
-          <button type="submit">Salvar viagem</button>
-        </div>
-      </form>
-    </section>
+<div class="topo">
 
-    <section class="lista" id="listaViagens"></section>
-  </main>
+<h1>Viagens</h1>
 
-  <script>
-    const MODULO = "viagens";
+<a href="/dashboard/{{ usuario|lower }}">
 
-    const form = document.getElementById("formViagem");
-    const lista = document.getElementById("listaViagens");
+Voltar ao Dashboard
 
-    function formatarData(data) {
-      if (!data) return "Sem data";
-      const partes = data.split("-");
-      return `${partes[2]}/${partes[1]}/${partes[0]}`;
-    }
+</a>
 
-    function renderizarViagens() {
-      const viagens = PortalStorage.listar(MODULO);
-      lista.innerHTML = "";
+</div>
 
-      if (!viagens.length) {
-        lista.innerHTML = `<div class="vazio">Nenhuma viagem cadastrada ainda.</div>`;
-        return;
-      }
+<div class="painel">
 
-      viagens.forEach((viagem) => {
-        const card = document.createElement("article");
-        card.className = "card";
+<div class="acoes">
 
-        card.innerHTML = `
-          <h3>${viagem.destino || "Viagem sem destino"}</h3>
+<button onclick="window.location='/nova-viagem/{{ usuario|lower }}'">
 
-          <div class="meta">
-            <div><strong>Período:</strong> ${formatarData(viagem.dataInicio)} até ${formatarData(viagem.dataFim)}</div>
-            <div><strong>Hotel:</strong> ${viagem.hotel || "Não informado"}</div>
-            <div><strong>Transporte:</strong> ${viagem.transporte || "Não informado"}</div>
-            <div><strong>Status:</strong> ${viagem.status || "Não informado"}</div>
-          </div>
+Nova Viagem
 
-          <div class="obs">${viagem.observacoes || ""}</div>
+</button>
 
-          <button class="remover" onclick="removerViagem('${viagem.id}')">Remover</button>
-        `;
+</div>
 
-        lista.appendChild(card);
-      });
-    }
+</div>
 
-    function removerViagem(id) {
-      PortalStorage.remover(MODULO, id);
-      renderizarViagens();
-    }
+<section
+class="lista"
+id="listaViagens">
 
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
+</section>
 
-      PortalStorage.adicionar(MODULO, {
-        destino: document.getElementById("destino").value.trim(),
-        dataInicio: document.getElementById("dataInicio").value,
-        dataFim: document.getElementById("dataFim").value,
-        hotel: document.getElementById("hotel").value.trim(),
-        transporte: document.getElementById("transporte").value.trim(),
-        status: document.getElementById("status").value.trim(),
-        observacoes: document.getElementById("observacoes").value.trim()
-      });
+</main>
 
-      form.reset();
-      renderizarViagens();
-    });
+<script>
 
-    renderizarViagens();
-  </script>
+const MODULO="viagens";
+
+const lista=document.getElementById("listaViagens");
+
+function formatar(data){
+
+if(!data) return "-";
+
+const p=data.split("-");
+
+return `${p[2]}/${p[1]}/${p[0]}`;
+
+}
+
+function carregar(){
+
+const viagens=PortalStorage.listar(MODULO);
+
+lista.innerHTML="";
+
+if(viagens.length===0){
+
+lista.innerHTML="<p>Nenhuma viagem cadastrada.</p>";
+
+return;
+
+}
+
+viagens.forEach(v=>{
+
+const card=document.createElement("div");
+
+card.className="card";
+
+card.innerHTML=`
+
+<h2>${v.destino}</h2>
+
+<div class="meta">
+
+${formatar(v.dataInicio)} até ${formatar(v.dataFim)}
+
+</div>
+
+<div class="meta">
+
+Hotel: ${v.hotel||"-"}
+
+</div>
+
+<div class="meta">
+
+Transporte: ${v.transporte||"-"}
+
+</div>
+
+<div class="meta">
+
+Status: ${v.status||"-"}
+
+</div>
+
+<div class="obs">
+
+${v.observacoes||""}
+
+</div>
+
+<button
+class="remover"
+onclick="remover('${v.id}')">
+
+Excluir
+
+</button>
+
+`;
+
+lista.appendChild(card);
+
+});
+
+}
+
+function remover(id){
+
+PortalStorage.remover(MODULO,id);
+
+carregar();
+
+}
+
+carregar();
+
+</script>
+
 </body>
 </html>
